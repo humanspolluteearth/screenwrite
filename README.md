@@ -2,7 +2,7 @@
 
 A frameless, GPU-accelerated minimalist writing environment for Arch Linux, inspired by the [Monkeytype](https://monkeytype.com) aesthetic. It is designed to remove all distractions, leaving only you and your thoughts.
 
-![Project Name](Menu_(computing)_example.PNG)
+---
 
 ## Philosophy
 
@@ -112,9 +112,3 @@ min_opacity: 0.0
 font_name: null
 default_save_path: "/home/user/focus.txt"
 ```
-
----
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details (or MIT if not provided).
