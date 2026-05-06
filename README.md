@@ -1,15 +1,30 @@
-# Focus-Write
+# Dump Your Thoughts (Focus-Write)
 
-A frameless, GPU-accelerated minimalist writing environment for Arch Linux, inspired by the [Monkeytype](https://monkeytype.com) aesthetic.
+A frameless, GPU-accelerated minimalist writing environment for Arch Linux, inspired by the [Monkeytype](https://monkeytype.com) aesthetic. It is designed to remove all distractions, leaving only you and your thoughts.
+
+![Project Name](Menu_(computing)_example.PNG)
+
+## Philosophy
+
+Most writing apps are cluttered with toolbars, sidebars, and status indicators. **Dump Your Thoughts** is built on the principle of *Dynamic Focus*:
+- **Typewriter Fade**: Only your active line is fully visible. Surrounding lines fade into the background as they move further from your cursor.
+- **Centered Workspace**: In Focused mode, your active line remains vertically centered, creating a consistent focal point.
+- **Retro Feedback**: Optional mechanical keyboard audio feedback to provide tactile-like confirmation of your progress.
+
+---
 
 ## Features
 
-- **Typewriter Fade**: The active line is 100% opaque. Previous/next lines fade using the formula: `Opacity = max(0.08, 1.0 - (distance × decay_rate))`
-- **Focused View** (default): Active line stays at vertical center, all others fade
-- **Full View**: Standard readable view with `:all` command
-- **Command Overlay**: Press `:` to enter commands
-- **Caret Blink**: Monkeytype-style blinking bar caret in `#e2b714`
-- **Zero network overhead**: No telemetry, no update checks
+- **Minimalist UI**: No window borders, no buttons, just text.
+- **Dynamic Opacity**: Active line is 100% opaque. Previous/next lines fade using a configurable decay formula.
+- **Multiple View Modes**: 
+  - `Focused`: Typewriter-style scrolling with line fading.
+  - `Full`: Standard reading mode with full visibility.
+- **Command Overlay**: A Vim-like command system triggered by `:` or `Ctrl+;`.
+- **Theming**: Built-in support for Default (Dark), Sepia, E-Ink (High Contrast), Night, and Amoled themes.
+- **PDF Export**: Export your writings to professional PDF documents directly from the app.
+- **Session Stats**: View words written, elapsed time, and WPM (Words Per Minute) upon quitting.
+- **Customizable**: Full control over font size, line height, column width, and decay rates via YAML.
 
 ---
 
@@ -17,72 +32,65 @@ A frameless, GPU-accelerated minimalist writing environment for Arch Linux, insp
 
 | Key | Action |
 |-----|--------|
+| `:` or `Ctrl+;` | Open Command Overlay |
+| `Ctrl+S` | Quick save to current file |
+| `Ctrl+Shift+S` | Save As... |
+| `Ctrl+O` | Open file dialog |
+| `Ctrl+Z` / `Ctrl+Y` | Undo / Redo |
+| `Ctrl+C` / `Ctrl+X` / `Ctrl+V` | Copy / Cut / Paste |
+| `Ctrl+A` | Select All |
+| `Ctrl+T` | Cycle through Themes |
+| `Ctrl+F` | Cycle through installed Fonts |
+| `Ctrl+` + `+/-` | Increase/Decrease Font Size |
+| `Tab` | Insert 4 spaces |
+| `Esc` | Close Command Overlay / Clear status message |
+
+---
+
+## Commands
+
+Enter these into the command overlay (`:`):
+
+| Command | Action |
+|---------|--------|
 | `:w` | Save to current file (defaults to `~/focus.txt`) |
 | `:w <path>` | Save to a specific path |
-| `:e <path>` / `:o <path>` | Open a file |
-| `:all` | Toggle between Focused and Full view |
-| `:q` / `:quit` | Quit the application |
-| `Ctrl+S` | Quick save |
-| `Ctrl+O` | Open the file dialog (command overlay) |
-| `Esc` | Close command overlay |
-| `Arrow Keys` | Navigate cursor |
-| `Home` / `End` | Jump to line start/end |
-| `Tab` | Insert 4 spaces |
+| `:e <path>` | Open a specific file |
+| `:all` | Toggle between Focused and Full view modes |
+| `:pdf` | Export current buffer to PDF |
+| `:theme <name>` | Switch theme (default, sepia, eink, night, amoled) |
+| `:font <name>` | Set font name (e.g., `:font JetBrains Mono`) |
+| `:size <num>` | Set font size |
+| `:lh <num>` | Set line height multiplier (e.g., `1.8`) |
+| `:width <num>` | Set max column width in pixels |
+| `:decay <0-1>` | Set line fade decay rate (higher = faster fade) |
+| `:reset` | Reset all settings to default |
+| `:q` / `:quit` | Show session summary and prepare to quit |
 
 ---
 
-## YAML Configuration
+## Installation
 
-The config file lives at `~/.config/focus-write/config.yaml` and is auto-generated on first run.
-
-```yaml
-background: "#0d0d0d"
-text_color: "#e0e0e0"
-caret_color: "#e2b714"
-font_size: 22.0
-line_height: 1.8
-max_width: 800.0
-decay_rate: 0.15
-min_opacity: 0.08
-```
-
-### Config Schema
-
-| Key | Type | Description |
-|-----|------|-------------|
-| `background` | Hex color | Window background |
-| `text_color` | Hex color | Base text color |
-| `caret_color` | Hex color | Caret/active highlight color |
-| `font_size` | Float | Font size in pixels |
-| `line_height` | Float multiplier | Line spacing multiplier (e.g. `1.8`) |
-| `max_width` | Float | Max text column width in pixels |
-| `decay_rate` | Float (0.0–1.0) | How fast lines fade. Higher = faster fade |
-| `min_opacity` | Float (0.0–1.0) | Floor opacity for the most distant lines |
-
----
-
-## Building
-
-### Requirements
-
-- `rustup` with stable toolchain
-- `libfontconfig` (for font loading)
-- `libxkbcommon` (for keyboard)
-- `libvulkan` or `libGL` (GPU backend)
+### Dependencies
 
 On Arch Linux:
 ```bash
-sudo pacman -S fontconfig libxkbcommon vulkan-icd-loader
+sudo pacman -S fontconfig libxkbcommon vulkan-icd-loader ttf-jetbrains-mono
 ```
 
-### Build & Run
+### From Source
 
-```bash
-cargo build --release
-./target/release/focus-write
-```
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:humaneediedofanxiety/dump-your-thoughts.git
+   cd dump-your-thoughts
+   ```
+2. Build and run:
+   ```bash
+   cargo run --release
+   ```
 
-Or install via the PKGBUILD:
+### Arch Linux (PKGBUILD)
 
 ```bash
 makepkg -si
@@ -90,10 +98,23 @@ makepkg -si
 
 ---
 
-## Font
+## Configuration
 
-Focus-Write requires **JetBrains Mono**. Install it with:
+The configuration is stored in `~/.config/focus-write/config.yaml`.
 
-```bash
-sudo pacman -S ttf-jetbrains-mono
+```yaml
+theme: Default
+font_size: 22.0
+line_height: 1.8
+max_width: 800.0
+decay_rate: 0.35
+min_opacity: 0.0
+font_name: null
+default_save_path: "/home/user/focus.txt"
 ```
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details (or MIT if not provided).
