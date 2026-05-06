@@ -1,0 +1,16 @@
+[package]
+name = "focus-write"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "focus-write"
+path = "src/main.rs"
+
+[dependencies]
+iced = { version = "0.12", features = ["tokio", "canvas", "advanced"] }
+serde = { version = "1", features = ["derive"] }
+serde_yaml = "0.9"
+rfd = "0.14"
+rodio = "0.17"
+genpdf = "0.2"
