@@ -1,6 +1,6 @@
-# Dump Your Thoughts (Focus-Write)
+## Screenwrite
 
-A frameless, GPU-accelerated minimalist writing environment for Arch Linux, inspired by the [Monkeytype](https://monkeytype.com) aesthetic. It is designed to remove all distractions, leaving only you and your thoughts.
+A frameless, GPU-accelerated minimalist writing environment for Linux, like most of the applications I build - this was build solely for my personal use since I am someone who easily get's overwhelmed, I wanted something to dump my thoughts or write without looking back at what I wrote and as a human (we are social creatures btw) pushing to github is a basic necessity so here is the documentaion below. (Gen by AI defo)
 
 ---
 
